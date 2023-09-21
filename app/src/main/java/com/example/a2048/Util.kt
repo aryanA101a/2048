@@ -5,6 +5,10 @@ class Util {
          fun idxToCoordinates(idx: Int) = Pair(first = idx / 4, second = idx % 4)
          
      }
-    data class PositionedInt(var value: Int, val position: Int)
+    data class Cell(val value: Int,  val id:Int){
+        override fun toString(): String {
+            return "(value=$value id=$id)"
+        }
+    }
 
 }

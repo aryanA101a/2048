@@ -7,8 +7,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.a2048.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding;
@@ -22,7 +24,9 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.cLayout.setOnTouchListener(object : OnSwipeTouchListener(this@MainActivity) {
             override fun onSwipeLeft() {
-                viewModel.onLeft(gridAdapter)
+               lifecycleScope.launch{
+                   viewModel.onLeft(gridAdapter)
+               }
             }
 
             override fun onSwipeRight() {
