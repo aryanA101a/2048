@@ -1,4 +1,4 @@
-package com.example.a2048
+package com.example.a2048.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.a2048.R
 import com.example.a2048.databinding.GridItemBinding
+import com.example.a2048.model.Cell
+import com.example.a2048.util.Util
 
-class GridAdapter() : ListAdapter<Util.Cell, MyViewHolder>(MyDiffCallback()) {
+class GridAdapter() : ListAdapter<Cell, MyViewHolder>(MyDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
@@ -32,25 +35,25 @@ class GridAdapter() : ListAdapter<Util.Cell, MyViewHolder>(MyDiffCallback()) {
 }
 
 class MyViewHolder(val binding: GridItemBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(data: Util.Cell) {
-            binding.cellTextView.text = data.value.toString()
+    fun bind(data: Cell) {
+        binding.cellTextView.text = data.value.toString()
         binding.cellTextView.visibility = if (data.value == 0) View.INVISIBLE else View.VISIBLE
     }
 
 }
 
-class MyDiffCallback : DiffUtil.ItemCallback<Util.Cell>() {
+class MyDiffCallback : DiffUtil.ItemCallback<Cell>() {
     override fun areItemsTheSame(
-        oldItem: Util.Cell,
-        newItem: Util.Cell
+        oldItem: Cell,
+        newItem: Cell
     ): Boolean {
 //        Log.i("position", "areItemsTheSame: old:${oldItem.position} new:${newItem.position}")
         return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
-        oldItem: Util.Cell,
-        newItem: Util.Cell
+        oldItem: Cell,
+        newItem: Cell
     ): Boolean {
 //        Log.i("value", "areContentsTheSame: old:${oldItem.value} new:${newItem.value}")
         return oldItem.value == newItem.value
@@ -58,21 +61,23 @@ class MyDiffCallback : DiffUtil.ItemCallback<Util.Cell>() {
 
 }
 
-class GridItemAnimator(private val duration: Long) : DefaultItemAnimator() {
-
-    override fun getAddDuration(): Long {
-        return duration
+class GridItemAnimator() : DefaultItemAnimator() {
+    override fun animateChange(
+        oldHolder: RecyclerView.ViewHolder?,
+        newHolder: RecyclerView.ViewHolder?,
+        fromX: Int,
+        fromY: Int,
+        toX: Int,
+        toY: Int
+    ): Boolean {
+//        if (fromX < toX) {
+//            if (oldHolder!=newHolder){
+//                oldHolder?.let { dispatchAnimationFinished(it) }
+//            }
+//            newHolder?.let { dispatchAnimationFinished(it) }
+//            return false
+//        }
+        return super.animateChange(oldHolder, newHolder, fromX, fromY, toX, toY)
     }
 
-    override fun getRemoveDuration(): Long {
-        return duration
-    }
-
-    override fun getMoveDuration(): Long {
-        return duration
-    }
-
-    override fun getChangeDuration(): Long {
-        return duration
-    }
 }
