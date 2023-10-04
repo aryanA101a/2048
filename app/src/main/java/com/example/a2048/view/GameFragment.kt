@@ -42,7 +42,7 @@ class GameFragment : Fragment() {
     ): View? {
         binding = FragmentGameBinding.inflate(inflater, container, false).apply {
             viewModel = gameViewModel
-            lifecycleOwner = requireActivity()
+            lifecycleOwner = viewLifecycleOwner
 
             btnReset.setOnClickListener {
                 handleResetGame()
@@ -94,14 +94,16 @@ class GameFragment : Fragment() {
     }
 
     private fun displayGameBoard() {
-        gameViewModel.gameBoardState.observe(requireActivity()) {
+        gameViewModel.gameBoardState.observe(viewLifecycleOwner) {
             gridAdapter.submitList(it.cellMatrix.flatten())
         }
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 gameViewModel.moveOutcome.collect { moveOutcome ->
                     when (moveOutcome) {
-                        MoveOutcome.WON -> findNavController().navigate(R.id.action_gameFragment_to_winningFragment)
+                        MoveOutcome.WON ->
+                            findNavController().navigate(R.id.action_gameFragment_to_winningFragment)
+
                         MoveOutcome.LOST -> handleLoseGame()
                         else -> Unit
                     }
@@ -110,16 +112,16 @@ class GameFragment : Fragment() {
         }
     }
 
-    fun handleResetGame() {
+    private fun handleResetGame() {
         if (gameViewModel.gameBoardState.value!!.result == MoveOutcome.LOST) {
             binding.btnReset.clearAnimation()
             binding.tvGameOver.visibility = View.INVISIBLE
-            binding.rvGrid.foreground=null
+            binding.rvGrid.foreground = null
         }
         gameViewModel.onReset()
     }
 
-    fun handleLoseGame() {
+    private fun handleLoseGame() {
         binding.tvGameOver.visibility = View.VISIBLE
         binding.rvGrid.foreground =
             ContextCompat.getDrawable(requireContext(), R.color.GameOverColor)
