@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clWinningDialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EFCA45">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/luckiest_guy"
+            android:text="2048"
+            android:textColor="#D0AB2A"
+            android:textSize="100dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <ImageButton
+            android:id="@+id/btnResetOnWinningDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundedcorners"
+            android:backgroundTint="#F4511E"
+            android:padding="15dp"
+            android:src="@drawable/round_restart_alt_28"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnContinue"
+            app:layout_constraintHorizontal_bias="0.65"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.88"
+            app:tint="#FB9D7F" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContinue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/luckiest_guy"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="10dp"
+            android:text="Continue"
+            android:textColor="#6FBBFD"
+            android:textSize="28sp"
+            app:backgroundTint="#1E88E5"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/round_play_circle_30"
+            app:iconPadding="8dp"
+            app:iconSize="28sp"
+            app:iconTint="#6FBBFD"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.88" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -4,5 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="EmptyCell">#ffCDC1B3</color>
     <color name="Board">#ffBAACA0</color>
+    <color name="Background">#ff29394C</color>
+    <color name="GameOverColor">#A0B58F6E</color>
+    <color name="GameOverTextColor">#2F261D</color>
 
 </resources>

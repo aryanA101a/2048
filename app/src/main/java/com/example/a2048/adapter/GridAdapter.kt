@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.a2048.R
 import com.example.a2048.databinding.GridItemBinding
 import com.example.a2048.model.Cell
-import com.example.a2048.util.Util
+import com.example.a2048.util.Utils
 
 class GridAdapter() : ListAdapter<Cell, MyViewHolder>(MyDiffCallback()) {
 
@@ -27,7 +27,7 @@ class GridAdapter() : ListAdapter<Cell, MyViewHolder>(MyDiffCallback()) {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val coordinates = Util.idxToCoordinates(position)
+        val coordinates = Utils.idxToCoordinates(position)
         holder.bind(getItem(position))
     }
 
@@ -79,5 +79,6 @@ class GridItemAnimator() : DefaultItemAnimator() {
 //        }
         return super.animateChange(oldHolder, newHolder, fromX, fromY, toX, toY)
     }
+
 
 }

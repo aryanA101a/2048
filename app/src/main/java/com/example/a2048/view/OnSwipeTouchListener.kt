@@ -26,29 +26,35 @@ open class OnSwipeTouchListener(ctx: Context) : View.OnTouchListener {
             return true
         }
 
-        override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-            val distanceX = e2.x - e1.x
-            val distanceY = e2.y - e1.y
-            if (abs(distanceX) > abs(distanceY)) {
-                if (abs(distanceX) > SWIPE_DISTANCE_THRESHOLD && abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (distanceX > 0) {
-                        onSwipeRight()
-                    } else {
-                        onSwipeLeft()
+         override fun onFling(e1: MotionEvent?,
+                    e2: MotionEvent,
+                    velocityX: Float,
+                    velocityY: Float): Boolean {
+            e1?.let {
+                val distanceX = e2.x - e1.x
+                val distanceY = e2.y - e1.y
+                if (abs(distanceX) > abs(distanceY)) {
+                    if (abs(distanceX) > SWIPE_DISTANCE_THRESHOLD && abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (distanceX > 0) {
+                            onSwipeRight()
+                        } else {
+                            onSwipeLeft()
+                        }
+                        return true
                     }
-                    return true
-                }
-            } else {
-                if (abs(distanceY) > SWIPE_DISTANCE_THRESHOLD && abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (distanceY > 0) {
-                        onSwipeDown()
-                    } else {
-                        onSwipeUp()
+                } else {
+                    if (abs(distanceY) > SWIPE_DISTANCE_THRESHOLD && abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (distanceY > 0) {
+                            onSwipeDown()
+                        } else {
+                            onSwipeUp()
+                        }
+                        return true
                     }
-                    return true
                 }
+
             }
-            return false
+             return false
         }
     }
 

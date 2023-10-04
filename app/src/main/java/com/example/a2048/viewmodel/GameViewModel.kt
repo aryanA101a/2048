@@ -6,44 +6,52 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a2048.model.GameBoard
 import com.example.a2048.model.Cell
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import com.example.a2048.util.Direction
+import com.example.a2048.util.MoveOutcome
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 class GameViewModel : ViewModel() {
     private val gameBoard = GameBoard()
-    private val _gameBoardState = MutableLiveData<List<List<Cell>>>()
-    val gameBoardState: LiveData<List<List<Cell>>>
-        get() = _gameBoardState
+
+    private val _gameBoardState = MutableLiveData<GameBoard.GameBoardState>()
+    val gameBoardState: LiveData<GameBoard.GameBoardState> = _gameBoardState
+
+//    private val _gameBoardScore = MutableLiveData<Int>()
+//    val gameBoardScore: LiveData<Int> = _gameBoardScore
+//
+    private val _moveOutcome = MutableSharedFlow<MoveOutcome>()
+    val moveOutcome: SharedFlow<MoveOutcome> = _moveOutcome
 
 
     init {
-        // Initialize LiveData with the initial state
         _gameBoardState.value = gameBoard.state
+
     }
 
-    enum class SwipeDirection { UP, DOWN, RIGHT, LEFT }
 
-    fun onSwipe(swipeDirection: SwipeDirection) {
-        val stateChanged = when (swipeDirection) {
-            SwipeDirection.UP -> gameBoard.upMove()
-            SwipeDirection.DOWN -> gameBoard.downMove()
-            SwipeDirection.RIGHT -> gameBoard.rightMove()
-            SwipeDirection.LEFT -> gameBoard.leftMove()
-        }
-
+    fun onSwipe(direction: Direction) {
+        val (stateChanged, moveOutcome) = gameBoard.move(direction = direction)
         if (stateChanged) {
             _gameBoardState.value = gameBoard.state
-            viewModelScope.launch {
-                CoroutineScope(Dispatchers.Main).launch {
-                    delay(300L)
-                    gameBoard.placeRandomCell()
-                    _gameBoardState.value = gameBoard.state
+            if(moveOutcome!=MoveOutcome.NOTHING)
+                viewModelScope.launch {
+                    _moveOutcome.emit(moveOutcome)
                 }
-            }
         }
 
+    }
+
+    fun onUndo() {
+        gameBoard.undoState()
+        _gameBoardState.value = gameBoard.state
+
+    }
+
+    fun onReset() {
+        gameBoard.initState()
+        _gameBoardState.value = gameBoard.state
     }
 
 
