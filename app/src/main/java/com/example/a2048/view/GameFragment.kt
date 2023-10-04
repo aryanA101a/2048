@@ -40,6 +40,7 @@ class GameFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentGameBinding.inflate(inflater, container, false).apply {
             viewModel = gameViewModel
             lifecycleOwner = viewLifecycleOwner
@@ -48,28 +49,9 @@ class GameFragment : Fragment() {
                 handleResetGame()
             }
 
-            clFragmentGame.setOnTouchListener(object :
-                OnSwipeTouchListener(requireContext()) {
-
-                override fun onSwipeLeft() {
-                    gameViewModel.onSwipe(Direction.LEFT)
-                }
-
-                override fun onSwipeRight() {
-                    gameViewModel.onSwipe(Direction.RIGHT)
-
-                }
-
-                override fun onSwipeUp() {
-                    gameViewModel.onSwipe(Direction.UP)
-
-                }
-
-                override fun onSwipeDown() {
-                    gameViewModel.onSwipe(Direction.DOWN)
-                }
-            })
-
+            val gameTouchListener=createGameTouchListener()
+            rvGrid.setOnTouchListener(gameTouchListener)
+            clFragmentGame.setOnTouchListener(gameTouchListener)
 
         }
         initGrid()
@@ -89,8 +71,9 @@ class GameFragment : Fragment() {
         binding.rvGrid.itemAnimator = GridItemAnimator()
         gridAdapter = GridAdapter()
         binding.rvGrid.adapter = gridAdapter
-        Log.i("TAG", "initGrid:${gameViewModel.gameBoardState.value!!} ")
         gridAdapter.submitList(gameViewModel.gameBoardState.value!!.cellMatrix.flatten())
+
+        Log.i("TAG", "initGrid:${gameViewModel.gameBoardState.value!!} ")
     }
 
     private fun displayGameBoard() {
@@ -129,6 +112,28 @@ class GameFragment : Fragment() {
             binding.btnReset.startAnimation(it)
         }
 
+    }
+
+    private fun createGameTouchListener()=object :
+        OnSwipeTouchListener(requireContext()) {
+
+        override fun onSwipeLeft() {
+            gameViewModel.onSwipe(Direction.LEFT)
+        }
+
+        override fun onSwipeRight() {
+            gameViewModel.onSwipe(Direction.RIGHT)
+
+        }
+
+        override fun onSwipeUp() {
+            gameViewModel.onSwipe(Direction.UP)
+
+        }
+
+        override fun onSwipeDown() {
+            gameViewModel.onSwipe(Direction.DOWN)
+        }
     }
 
 
