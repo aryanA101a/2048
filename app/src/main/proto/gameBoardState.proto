@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option java_package = "com.example.a2048";
+option java_multiple_files = true;
+
+
+
+message SavedGameProto{
+
+  message CellProto {
+    int32 value = 1;
+    int32 id = 2;
+  }
+
+  enum MoveOutcomeProto {
+    NOTHING = 0;
+    WON = 1;
+    LOST = 2;
+  }
+
+  message CellRowProto {
+    repeated CellProto cells = 1;
+  }
+
+  message BoardStateProto{
+    repeated CellRowProto cellMatrix = 1;
+    repeated int32 unfilledCells = 2;
+  }
+
+  message GameStateProto{
+    BoardStateProto boardState=1;
+    int32 score = 2;
+    int32 highScore=3;
+    MoveOutcomeProto result = 4;
+  }
+
+  GameStateProto state=1;
+  GameStateProto prevState=2;
+}

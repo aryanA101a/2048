@@ -7,5 +7,6 @@
     <color name="Background">#ff29394C</color>
     <color name="GameOverColor">#A0B58F6E</color>
     <color name="GameOverTextColor">#2F261D</color>
+    <color name="GameOverResetBtnColor">#74BE90</color>
 
 </resources>

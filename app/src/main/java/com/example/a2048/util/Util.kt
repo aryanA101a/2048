@@ -5,4 +5,4 @@ object Utils {
 }
 
 enum class Direction { UP, DOWN, RIGHT, LEFT }
-enum class MoveOutcome { WON, LOST, NOTHING, }
+enum class MoveOutcome { NOTHING, WON, LOST }

@@ -2,6 +2,9 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.protobuf") version "0.9.4"
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -43,6 +46,13 @@ dependencies {
     val lifecycle_version = "2.6.1"
     val nav_version = "2.7.3"
 
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.48.1")
+
+    implementation("androidx.datastore:datastore:1.0.0")
+    implementation("com.google.protobuf:protobuf-javalite:3.24.3")
+    implementation("com.google.protobuf:protobuf-kotlin-lite:3.24.3")
+
 
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
@@ -62,4 +72,27 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.24.3"
+    }
+
+    generateProtoTasks {
+        all().forEach{ task ->
+            task.builtins {
+                create("java") {
+                    option("lite")
+                }
+                create("kotlin") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.a2048.model
+package com.example.a2048.data.model
 
 import com.example.a2048.util.MoveOutcome
 

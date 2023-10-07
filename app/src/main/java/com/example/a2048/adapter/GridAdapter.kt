@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.a2048.R
 import com.example.a2048.databinding.GridItemBinding
-import com.example.a2048.model.Cell
+import com.example.a2048.data.model.Cell
 import com.example.a2048.util.Utils
 
 class GridAdapter() : ListAdapter<Cell, MyViewHolder>(MyDiffCallback()) {

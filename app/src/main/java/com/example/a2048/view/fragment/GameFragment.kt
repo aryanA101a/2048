@@ -1,4 +1,4 @@
-package com.example.a2048.view
+package com.example.a2048.view.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -21,19 +21,28 @@ import com.example.a2048.adapter.GridItemAnimator
 import com.example.a2048.databinding.FragmentGameBinding
 import com.example.a2048.util.Direction
 import com.example.a2048.util.MoveOutcome
+import com.example.a2048.view.listener.OnSwipeTouchListener
 import com.example.a2048.viewmodel.GameViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class GameFragment : Fragment() {
     private lateinit var binding: FragmentGameBinding
     private lateinit var gridAdapter: GridAdapter
     private val gameViewModel: GameViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+//    override fun onPause() {
+//        Log.i("TAG", "onPause: ")
+//        gameViewModel.persistState()
+//        super.onPause()
+//    }
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        Log.i("TAG", "onResume: ")
+//        gameViewModel.restorePersistedState()
+//        super.onCreate(savedInstanceState)
+//    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -49,7 +58,7 @@ class GameFragment : Fragment() {
                 handleResetGame()
             }
 
-            val gameTouchListener=createGameTouchListener()
+            val gameTouchListener = createGameTouchListener()
             rvGrid.setOnTouchListener(gameTouchListener)
             clFragmentGame.setOnTouchListener(gameTouchListener)
 
@@ -71,50 +80,63 @@ class GameFragment : Fragment() {
         binding.rvGrid.itemAnimator = GridItemAnimator()
         gridAdapter = GridAdapter()
         binding.rvGrid.adapter = gridAdapter
-        gridAdapter.submitList(gameViewModel.gameBoardState.value!!.cellMatrix.flatten())
+        gridAdapter.submitList(gameViewModel.gameState.value!!.boardState.cellMatrix.flatten())
 
-        Log.i("TAG", "initGrid:${gameViewModel.gameBoardState.value!!} ")
+        Log.i("TAG", "initGrid:${gameViewModel.gameState.value!!} ")
     }
 
     private fun displayGameBoard() {
-        gameViewModel.gameBoardState.observe(viewLifecycleOwner) {
-            gridAdapter.submitList(it.cellMatrix.flatten())
+
+        gameViewModel.gameState.observe(viewLifecycleOwner) {
+            gridAdapter.submitList(it.boardState.cellMatrix.flatten())
         }
+
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 gameViewModel.moveOutcome.collect { moveOutcome ->
+
                     when (moveOutcome) {
-                        MoveOutcome.WON ->
-                            findNavController().navigate(R.id.action_gameFragment_to_winningFragment)
+                        MoveOutcome.WON -> findNavController().navigate(R.id.action_gameFragment_to_winningFragment)
 
                         MoveOutcome.LOST -> handleLoseGame()
+
                         else -> Unit
                     }
+
                 }
             }
         }
     }
 
     private fun handleResetGame() {
-        if (gameViewModel.gameBoardState.value!!.result == MoveOutcome.LOST) {
-            binding.btnReset.clearAnimation()
-            binding.tvGameOver.visibility = View.INVISIBLE
-            binding.rvGrid.foreground = null
-        }
         gameViewModel.onReset()
+        if (gameViewModel.gameState.value!!.result == MoveOutcome.LOST) {
+            binding.apply {
+                btnUndo.visibility=View.INVISIBLE
+                btnReset.backgroundTintList=ContextCompat.getColorStateList(requireContext(), R.color.Board)
+                btnReset.clearAnimation()
+                tvGameOver.visibility = View.INVISIBLE
+                rvGrid.foreground = null
+            }
+        }
+
     }
 
     private fun handleLoseGame() {
-        binding.tvGameOver.visibility = View.VISIBLE
-        binding.rvGrid.foreground =
-            ContextCompat.getDrawable(requireContext(), R.color.GameOverColor)
-        AnimationUtils.loadAnimation(requireContext(), R.anim.reset_button_animation).also {
-            binding.btnReset.startAnimation(it)
+        binding.apply {
+            btnUndo.visibility=View.INVISIBLE
+            tvGameOver.visibility = View.VISIBLE
+            rvGrid.foreground =
+                ContextCompat.getDrawable(requireContext(), R.color.GameOverColor)
+            btnReset.backgroundTintList=ContextCompat.getColorStateList(requireContext(), R.color.GameOverResetBtnColor)
+            AnimationUtils.loadAnimation(requireContext(), R.anim.reset_button_animation).let{
+                btnReset.startAnimation(it)
+            }
         }
 
     }
 
-    private fun createGameTouchListener()=object :
+    private fun createGameTouchListener() = object :
         OnSwipeTouchListener(requireContext()) {
 
         override fun onSwipeLeft() {
