@@ -109,7 +109,6 @@ class GameFragment : Fragment() {
     }
 
     private fun handleResetGame() {
-        gameViewModel.onReset()
         if (gameViewModel.gameState.value!!.result == MoveOutcome.LOST) {
             binding.apply {
                 btnUndo.visibility=View.INVISIBLE
@@ -119,6 +118,8 @@ class GameFragment : Fragment() {
                 rvGrid.foreground = null
             }
         }
+        gameViewModel.onReset()
+
 
     }
 

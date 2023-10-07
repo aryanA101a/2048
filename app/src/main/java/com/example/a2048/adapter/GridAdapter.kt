@@ -1,17 +1,24 @@
 package com.example.a2048.adapter
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.Color.parseColor
+import android.graphics.drawable.ColorDrawable
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.a2048.R
-import com.example.a2048.databinding.GridItemBinding
 import com.example.a2048.data.model.Cell
+import com.example.a2048.databinding.CellBinding
 import com.example.a2048.util.Utils
+import kotlin.math.log2
 
 class GridAdapter() : ListAdapter<Cell, MyViewHolder>(MyDiffCallback()) {
 
@@ -19,7 +26,7 @@ class GridAdapter() : ListAdapter<Cell, MyViewHolder>(MyDiffCallback()) {
         return MyViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.grid_item,
+                R.layout.cell,
                 parent,
                 false
             )
@@ -34,10 +41,42 @@ class GridAdapter() : ListAdapter<Cell, MyViewHolder>(MyDiffCallback()) {
 
 }
 
-class MyViewHolder(val binding: GridItemBinding) : RecyclerView.ViewHolder(binding.root) {
+class MyViewHolder(val binding: CellBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(data: Cell) {
+
+binding.cellTextView.setTextColor(getTextColorFromCellValue(data.value))
+            binding.cell.backgroundTintList =
+                ColorStateList.valueOf(getColorFromCellValue(data.value))
         binding.cellTextView.text = data.value.toString()
         binding.cellTextView.visibility = if (data.value == 0) View.INVISIBLE else View.VISIBLE
+    }
+
+    private fun getColorFromCellValue(value: Int): Int {
+        return when (value) {
+            0 -> parseColor("#CDC1B3")
+            2 -> parseColor("#EFE4DB")
+            4 -> parseColor("#ECE0C9")
+            8 -> parseColor("#F3B079")
+            16 -> parseColor("#F59462")
+            32 -> parseColor("#F77C5E")
+            64 -> parseColor("#F65E3B")
+            128 -> parseColor("#EDD050")
+            256 -> parseColor("#EDC53F")
+            512 -> parseColor("#EDC050")
+            1024 -> parseColor("#EDB53F")
+            2048 -> parseColor("#ECA53F")
+            4096 -> parseColor("#B685AB")
+            8192 -> parseColor("#B665AB")
+            16384 -> parseColor("#AB61A6")
+            else -> parseColor("#18DC69")
+        }
+    }
+
+    private fun getTextColorFromCellValue(value: Int): Int {
+        return when (value) {
+            8,16,32,64,256,512,1024,2048,8192,16384 -> parseColor("#FFFFFDE2")
+            else -> parseColor("#1E1E1E")
+        }
     }
 
 }
