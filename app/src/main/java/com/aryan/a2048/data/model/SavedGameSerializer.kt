@@ -1,4 +1,4 @@
-package com.example.a2048.data.model
+package com.aryan.a2048.data.model
 
 import androidx.datastore.core.Serializer
 import com.example.a2048.SavedGameProto

@@ -1,4 +1,4 @@
-package com.example.a2048
+package com.aryan.a2048
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import com.example.a2048.databinding.ActivityMainBinding
-import com.example.a2048.data.model.SavedGameSerializer
-import com.example.a2048.viewmodel.GameViewModel
+import com.aryan.a2048.R
+import com.aryan.a2048.databinding.ActivityMainBinding
+import com.example.a2048.SavedGameProto
+import com.aryan.a2048.data.model.SavedGameSerializer
+import com.aryan.a2048.viewmodel.GameViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 val Context.dataStore: DataStore<SavedGameProto> by dataStore(

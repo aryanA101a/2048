@@ -1,4 +1,4 @@
-package com.example.a2048.view.fragment
+package com.aryan.a2048.view.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -15,14 +15,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.a2048.R
-import com.example.a2048.adapter.GridAdapter
-import com.example.a2048.adapter.GridItemAnimator
-import com.example.a2048.databinding.FragmentGameBinding
-import com.example.a2048.util.Direction
-import com.example.a2048.util.MoveOutcome
-import com.example.a2048.view.listener.OnSwipeTouchListener
-import com.example.a2048.viewmodel.GameViewModel
+import com.aryan.a2048.R
+import com.aryan.a2048.adapter.GridAdapter
+import com.aryan.a2048.adapter.GridItemAnimator
+import com.aryan.a2048.databinding.FragmentGameBinding
+import com.aryan.a2048.util.Direction
+import com.aryan.a2048.util.MoveOutcome
+import com.aryan.a2048.view.listener.OnSwipeTouchListener
+import com.aryan.a2048.viewmodel.GameViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

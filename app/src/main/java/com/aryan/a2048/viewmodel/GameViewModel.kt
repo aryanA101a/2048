@@ -1,15 +1,15 @@
-package com.example.a2048.viewmodel
+package com.aryan.a2048.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.a2048.data.repository.GameRepository
-import com.example.a2048.data.model.Game
-import com.example.a2048.data.model.SavedGame
-import com.example.a2048.util.Direction
-import com.example.a2048.util.MoveOutcome
+import com.aryan.a2048.data.repository.GameRepository
+import com.aryan.a2048.data.model.Game
+import com.aryan.a2048.data.model.SavedGame
+import com.aryan.a2048.util.Direction
+import com.aryan.a2048.util.MoveOutcome
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

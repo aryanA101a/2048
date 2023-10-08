@@ -1,14 +1,14 @@
-package com.example.a2048.data.repository
+package com.aryan.a2048.data.repository
 
 import android.app.Application
 import android.util.Log
 import com.example.a2048.SavedGameProto
-import com.example.a2048.data.model.Board
-import com.example.a2048.data.model.Cell
-import com.example.a2048.dataStore
-import com.example.a2048.data.model.Game
-import com.example.a2048.data.model.SavedGame
-import com.example.a2048.util.MoveOutcome
+import com.aryan.a2048.data.model.Board
+import com.aryan.a2048.data.model.Cell
+import com.aryan.a2048.dataStore
+import com.aryan.a2048.data.model.Game
+import com.aryan.a2048.data.model.SavedGame
+import com.aryan.a2048.util.MoveOutcome
 import kotlinx.coroutines.flow.first
 
 class GameRepository(private val context: Application) {

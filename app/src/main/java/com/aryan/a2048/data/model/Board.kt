@@ -1,7 +1,7 @@
-package com.example.a2048.data.model
+package com.aryan.a2048.data.model
 
 import android.util.Log
-import com.example.a2048.util.Utils
+import com.aryan.a2048.util.Utils
 import kotlin.random.Random
 
 typealias Score = Int

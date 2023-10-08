@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.a2048"
+    namespace = "com.aryan.a2048"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.a2048"
+        applicationId = "com.aryan.a2048"
         minSdk = 24
         targetSdk = 33
         versionCode = 1

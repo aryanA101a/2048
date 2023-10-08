@@ -1,8 +1,8 @@
-package com.example.a2048.data.model
+package com.aryan.a2048.data.model
 
 import android.util.Log
-import com.example.a2048.util.MoveOutcome
-import com.example.a2048.util.Direction
+import com.aryan.a2048.util.MoveOutcome
+import com.aryan.a2048.util.Direction
 import javax.inject.Inject
 
 class Game @Inject constructor(val board: Board) {
@@ -96,7 +96,7 @@ class Game @Inject constructor(val board: Board) {
                 boardState = newBoardState,
                 score = state.score + score,
                 highScore = maxOf(state.score + score, state.highScore),
-                result = if (outcome==MoveOutcome.NOTHING) state.result else outcome
+                result = if (outcome== MoveOutcome.NOTHING) state.result else outcome
             )
 
             _state = newState
@@ -109,7 +109,7 @@ class Game @Inject constructor(val board: Board) {
 
 
     fun undoState() {
-        if (state.result!=MoveOutcome.LOST) {
+        if (state.result!= MoveOutcome.LOST) {
             _state = prevState
         }
     }

@@ -1,9 +1,9 @@
-package com.example.a2048.di
+package com.aryan.a2048.di
 
 import android.app.Application
-import com.example.a2048.data.model.Board
-import com.example.a2048.data.model.Game
-import com.example.a2048.data.repository.GameRepository
+import com.aryan.a2048.data.model.Board
+import com.aryan.a2048.data.model.Game
+import com.aryan.a2048.data.repository.GameRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +22,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesBoard():Board{
+    fun providesBoard(): Board {
         return Board()
     }
 

@@ -1,23 +1,19 @@
-package com.example.a2048.adapter
+package com.aryan.a2048.adapter
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.Color.parseColor
-import android.graphics.drawable.ColorDrawable
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.a2048.R
-import com.example.a2048.data.model.Cell
-import com.example.a2048.databinding.CellBinding
-import com.example.a2048.util.Utils
+import com.aryan.a2048.R
+import com.aryan.a2048.data.model.Cell
+import com.aryan.a2048.databinding.CellBinding
+import com.aryan.a2048.util.Utils
 import kotlin.math.log2
 
 class GridAdapter() : ListAdapter<Cell, MyViewHolder>(MyDiffCallback()) {
